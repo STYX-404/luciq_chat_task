@@ -10,10 +10,10 @@
 # Ignore all environment files (except templates).
 /.env*
 !/.env*.erb
-
+*/*/.env
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+*/log/*
+*/tmp/*
 !/log/.keep
 !/tmp/.keep
 
@@ -31,3 +31,4 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+.byebug_history

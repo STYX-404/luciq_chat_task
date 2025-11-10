@@ -1,0 +1,14 @@
+:concurrency: 5
+:queues:
+  - chats_creation_queue
+  - messages_creation_queue
+  - analytics
+  - default
+:scheduler:
+  :schedule:
+    update_chats_messages_count:
+      every: "30m"
+      class: UpdateChatsMessagesCountJob
+    update_applications_chats_count:
+      every: "30m"
+      class: UpdateApplicationsChatsCountJob
