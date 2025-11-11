@@ -16,7 +16,7 @@ class Api::V1::ApplicationsController < Api::V1::BaseController
     if @application.save
       render json: @application, status: :created
     else
-      render json: { errors: @application.errors }, status: :unprocessable_entity
+      render json: { errors: @application.errors }, status: :unprocessable_content
     end
   end
 
@@ -24,7 +24,7 @@ class Api::V1::ApplicationsController < Api::V1::BaseController
     if @application.update(application_params)
       render json: @application, status: :ok
     else
-      render json: { errors: @application.errors }, status: :unprocessable_entity
+      render json: { errors: @application.errors }, status: :unprocessable_content
     end
   end
 
@@ -32,7 +32,7 @@ class Api::V1::ApplicationsController < Api::V1::BaseController
     if @application.destroy
       render json: { message: 'Deleted successfully' }, status: :ok
     else
-      render json: { errors: @applications.errors }, status: :unprocessable_entity
+      render json: { errors: @applications.errors }, status: :unprocessable_content
     end
   end
 

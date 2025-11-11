@@ -15,7 +15,7 @@ class Api::V1::ChatsController < Api::V1::BaseController
     if @chat.destroy
       render json: { message: 'Deleted successfully' }, status: :ok
     else
-      render json: { errors: @chats.errors }, status: :unprocessable_entity
+      render json: { errors: @chats.errors }, status: :unprocessable_content
     end
   end
 end

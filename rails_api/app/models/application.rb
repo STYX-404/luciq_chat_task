@@ -4,7 +4,6 @@ class Application < ApplicationRecord
   has_secure_token length: 36
   has_many :chats, dependent: :destroy
 
-  before_create :check_token_uniqueness
   after_create :cache_token_in_redis
   before_destroy :remove_token_from_redis
 
@@ -24,13 +23,5 @@ class Application < ApplicationRecord
 
   def remove_token_from_redis
     REDIS.del(cache_key)
-  end
-
-  def check_token_uniqueness
-    loop do
-      break unless Application.exists?(token: token)
-
-      regenerate_token
-    end
   end
 end

@@ -5,7 +5,7 @@ class Api::V1::BaseController < ApplicationController
     application_token = params[:token] || params[:application_token]
 
     @application = Application.find_by(token: application_token)
-    return unless @application.blank?
+    return if @application.present?
 
     render json: { error: "Can't find a Application with token #{application_token}" }, status: :not_found
   end
@@ -14,7 +14,7 @@ class Api::V1::BaseController < ApplicationController
     chat_number = params[:chat_number] || params[:number]
 
     @chat = @application.chats.find_by(number: chat_number)
-    return unless @chat.blank?
+    return if @chat.present?
 
     render json: { error: "Can't find a Chat with number #{chat_number}" }, status: :not_found
   end
@@ -23,7 +23,7 @@ class Api::V1::BaseController < ApplicationController
     message_number = params[:message_number]
 
     @message = @chat.messages.find_by(number: message_number)
-    return unless @message.blank?
+    return if @message.present?
 
     render json: { error: "Can't find a Message with number #{message_number}" }, status: :not_found
   end

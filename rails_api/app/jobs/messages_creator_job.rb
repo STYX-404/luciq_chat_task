@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MessageCreatorJob
+class MessagesCreatorJob
   include Sidekiq::Job
   sidekiq_options queue: :messages_creation_queue, retry: 5
 

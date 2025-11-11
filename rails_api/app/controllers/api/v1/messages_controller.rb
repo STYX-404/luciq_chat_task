@@ -1,6 +1,6 @@
 class Api::V1::MessagesController < Api::V1::BaseController
-  before_action :set_application, only: %i[show update destroy]
-  before_action :set_chat, only: %i[show update destroy]
+  before_action :set_application
+  before_action :set_chat
   before_action :set_message, only: %i[show update destroy]
 
   def index
@@ -22,7 +22,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
     if @message.update(message_params)
       render json: @message, status: :ok
     else
-      render json: { errors: @message.errors }, status: :unprocessable_entity
+      render json: { errors: @message.errors }, status: :unprocessable_content
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
     if @message.destroy
       render json: { message: 'Deleted successfully' }, status: :ok
     else
-      render json: { errors: @messages.errors }, status: :unprocessable_entity
+      render json: { errors: @messages.errors }, status: :unprocessable_content
     end
   end
 
