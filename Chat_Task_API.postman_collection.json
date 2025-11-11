@@ -1,0 +1,539 @@
+{
+	"info": {
+		"_postman_id": "chat-task-api-collection",
+		"name": "Chat Task API",
+		"description": "Complete API collection for Chat Task Application - A multi-service application with Rails API and Go service for handling chat applications, chats, and messages.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Applications",
+			"item": [
+				{
+					"name": "List Applications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications?page=1&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10, max: 100)"
+								}
+							]
+						},
+						"description": "Get paginated list of all applications"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Application",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"application\": {\n    \"name\": \"My Application\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							]
+						},
+						"description": "Create a new application. Returns the application with a generated token."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}"
+							]
+						},
+						"description": "Get a specific application by token"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Application",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"application\": {\n    \"name\": \"Updated Application Name\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}"
+							]
+						},
+						"description": "Update an application's name"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Application",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}"
+							]
+						},
+						"description": "Delete an application"
+					},
+					"response": []
+				}
+			],
+			"description": "Application management endpoints"
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "Create Chat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats"
+							]
+						},
+						"description": "Create a new chat for an application. This request is handled by the Go service for high-performance. Returns immediately with chat number. Database persistence happens asynchronously via Sidekiq."
+					},
+					"response": []
+				},
+				{
+					"name": "List Chats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats?page=1&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10, max: 100)"
+								}
+							]
+						},
+						"description": "Get paginated list of chats for an application"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Chat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats/{{chat_number}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}"
+							]
+						},
+						"description": "Get a specific chat by number"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Chat",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats/{{chat_number}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}"
+							]
+						},
+						"description": "Delete a chat"
+					},
+					"response": []
+				}
+			],
+			"description": "Chat management endpoints. Chat creation is handled by the Go service for high performance."
+		},
+		{
+			"name": "Messages",
+			"item": [
+				{
+					"name": "Create Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": {\n    \"body\": \"Hello, this is a test message\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats/{{chat_number}}/messages",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages"
+							]
+						},
+						"description": "Create a new message in a chat. This request is handled by the Go service for high-performance. Returns immediately with message number. Database persistence happens asynchronously via Sidekiq."
+					},
+					"response": []
+				},
+				{
+					"name": "List Messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats/{{chat_number}}/messages?page=1&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10, max: 100)"
+								}
+							]
+						},
+						"description": "Get paginated list of messages in a chat"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Message",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats/{{chat_number}}/messages/{{message_number}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages",
+								"{{message_number}}"
+							]
+						},
+						"description": "Get a specific message by number"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Message",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": {\n    \"body\": \"Updated message body\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats/{{chat_number}}/messages/{{message_number}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages",
+								"{{message_number}}"
+							]
+						},
+						"description": "Update a message's body"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Message",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats/{{chat_number}}/messages/{{message_number}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages",
+								"{{message_number}}"
+							]
+						},
+						"description": "Delete a message"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/applications/{{application_token}}/chats/{{chat_number}}/messages/search?query=hello&page=1&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "hello",
+									"description": "Search query string (required)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10, max: 100)"
+								}
+							]
+						},
+						"description": "Search messages in a chat using Elasticsearch full-text search"
+					},
+					"response": []
+				}
+			],
+			"description": "Message management endpoints. Message creation is handled by the Go service for high performance."
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost",
+			"type": "string"
+		},
+		{
+			"key": "application_token",
+			"value": "",
+			"type": "string",
+			"description": "Application token (obtained from Create Application response)"
+		},
+		{
+			"key": "chat_number",
+			"value": "1",
+			"type": "string",
+			"description": "Chat number (obtained from Create Chat response)"
+		},
+		{
+			"key": "message_number",
+			"value": "1",
+			"type": "string",
+			"description": "Message number (obtained from Create Message response)"
+		}
+	]
+}
+
