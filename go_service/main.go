@@ -79,10 +79,7 @@ func init() {
 }
 
 func initializeRedis() {
-	redisAddr := os.Getenv("REDIS_URL")
-	if redisAddr == "" {
-		redisAddr = defaultRedisAddr
-	}
+	redisAddr := defaultRedisAddr
 
 	rdb = redis.NewClient(&redis.Options{
 		Addr:     redisAddr,

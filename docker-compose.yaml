@@ -14,7 +14,7 @@ services:
     image: mysql:8.4.7
     volumes:
       - db-data:/var/lib/mysql
-    env_file: docker/development/.env
+    env_file: .env
 
   redis:
     image: redis:8.2
@@ -25,17 +25,21 @@ services:
       - redis
     build:
       context: .
-      dockerfile: docker/development/Dockerfile
-    env_file: docker/development/.env
+      dockerfile: rails_api/Dockerfile
+    env_file: .env
     entrypoint: "bundle exec sidekiq"
     stdin_open: true
     tty: true
+    volumes:
+      - ./rails_api:/app
 
   rails-api:
     build:
       context: .
-      dockerfile: docker/development/Dockerfile
-    env_file: docker/development/.env
+      dockerfile: rails_api/Dockerfile
+    volumes:
+      - ./rails_api:/app
+    env_file: .env
     entrypoint: /app/entrypoint.sh
     stdin_open: true
     tty: true
@@ -48,6 +52,7 @@ services:
     build:
       context: ./go_service
       dockerfile: Dockerfile
+    env_file: .env
     depends_on:
       - redis
 

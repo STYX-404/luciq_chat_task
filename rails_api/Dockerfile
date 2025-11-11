@@ -7,4 +7,4 @@ RUN gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)
 RUN apt update && apt install -y curl build-essential less ca-certificates unzip groff default-libmysqlclient-dev && apt clean
 RUN bundle install --jobs 20 --retry 5
 COPY rails_api/ .
-COPY ./docker/development/.env .
+
