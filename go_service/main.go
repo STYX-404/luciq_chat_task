@@ -25,7 +25,7 @@ const (
 
 const (
 	sidekiqJobClassChatsConsumer   = "ChatsCreatorJob"
-	sidekiqJobClassMessageCreator   = "MessageCreatorJob"
+	sidekiqJobClassMessagesCreator   = "MessagesCreatorJob"
 	sidekiqQueueChatsCreation      = "chats_creation_queue"
 	sidekiqQueueMessageCreation     = "messages_creation_queue"
 )
@@ -346,7 +346,7 @@ func enqueueMessageCreationJob(ctx context.Context, message Message) error {
 	}
 
 	job := SidekiqJob{
-		Class:      sidekiqJobClassMessageCreator,
+		Class:      sidekiqJobClassMessagesCreator,
 		Args:       []interface{}{messageMap},
 		Retry:      true,
 		Queue:      sidekiqQueueMessageCreation,
